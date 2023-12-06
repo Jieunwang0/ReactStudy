@@ -1,4 +1,6 @@
 import { useState, useRef } from "react";
+import styled from "styled-components";
+
 
 const DiaryEditor = ({ onCreate }) => {
     const [state, setState] = useState({
@@ -35,29 +37,9 @@ const DiaryEditor = ({ onCreate }) => {
     };
 
     return (
-        <div className="DiaryEditor">
+        <EditorWrapper>
             <h2>하루 일기</h2>
-            <div>
-                <input
-                    name="author"
-                    type="text"
-                    value={state.author}
-                    onChange={handleChangeEvent}
-                    placeholder="이름을 남겨주세요."
-                    ref={authorRef}
-                />
-            </div>
-            <div>
-                <textarea
-                    name="content"
-                    type="text"
-                    value={state.content}
-                    onChange={handleChangeEvent}
-                    placeholder="오늘 하루를 기록해보세요."
-                    ref={contentRef}
-                />
-            </div>
-            <div>
+            <EmotionArea>
                 <span>오늘의 기분 점수 </span>
                 <select
                     name="emotion"
@@ -70,12 +52,66 @@ const DiaryEditor = ({ onCreate }) => {
                     <option value="4">4</option>
                     <option value="5">5</option>
                 </select>
-            </div>
-            <button type="submit" onClick={handleSubmit}>
-                submit
-            </button>
-        </div>
+            </EmotionArea>
+            <AuthorArea>
+                <AuthorInput
+                    name="author"
+                    type="text"
+                    value={state.author}
+                    onChange={handleChangeEvent}
+                    placeholder="이름을 남겨주세요."
+                    ref={authorRef}
+                />
+            </AuthorArea>
+
+            <ContentArea>
+                <ContentText
+                    name="content"
+                    type="text"
+                    value={state.content}
+                    onChange={handleChangeEvent}
+                    placeholder="오늘 하루를 기록해보세요.(최소 5자 이상)"
+                    ref={contentRef}
+                />
+            </ContentArea>
+
+            <SubmitBtn type="submit" onClick={handleSubmit}>
+                작성하기
+            </SubmitBtn>
+        </EditorWrapper>
     );
 };
 
 export default DiaryEditor;
+
+const EditorWrapper = styled.div`
+    width: 100%;
+    height: auto;
+
+
+`;
+const EmotionArea = styled.div`
+    margin-bottom: 8px;
+`;
+
+
+const AuthorArea = styled.div`
+margin-bottom: 8px;
+`
+const AuthorInput = styled.input`
+    width: 80%;
+    height: 20px;
+`;
+const ContentArea = styled.div`
+    margin-bottom: 10px;
+`;
+const ContentText = styled.textarea`
+    width: 80%;
+    height: 150px;
+`;
+
+
+const SubmitBtn = styled.button`
+    width: 308px;
+    height: 26px;
+`;
