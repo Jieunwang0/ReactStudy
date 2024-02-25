@@ -1,15 +1,18 @@
-import { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import styled from "styled-components";
+import { DiaryDispatchContext } from "./App";
 
+const DiaryEditor = () => {
+    const {onCreate} = useContext(DiaryDispatchContext);
+    
+    const authorRef = useRef();
+    const contentRef = useRef();
 
-const DiaryEditor = ({ onCreate }) => {
     const [state, setState] = useState({
         author: "",
         content: "",
         emotion: 5,
     });
-    const authorRef = useRef();
-    const contentRef = useRef();
 
     const handleChangeEvent = (e) => {
         setState({
@@ -33,7 +36,7 @@ const DiaryEditor = ({ onCreate }) => {
             author: "",
             content: "",
             emotion: 5,
-        })
+        });
     };
 
     return (
@@ -70,7 +73,7 @@ const DiaryEditor = ({ onCreate }) => {
                     type="text"
                     value={state.content}
                     onChange={handleChangeEvent}
-                    placeholder="오늘 하루를 기록해보세요.(최소 5자 이상)"
+                    placeholder="오늘 하루를 기록해보세요. (최소 5자 이상)"
                     ref={contentRef}
                 />
             </ContentArea>
@@ -82,22 +85,19 @@ const DiaryEditor = ({ onCreate }) => {
     );
 };
 
-export default DiaryEditor;
+export default React.memo(DiaryEditor);
 
 const EditorWrapper = styled.div`
     width: 100%;
     height: auto;
-
-
 `;
 const EmotionArea = styled.div`
     margin-bottom: 8px;
 `;
 
-
 const AuthorArea = styled.div`
-margin-bottom: 8px;
-`
+    margin-bottom: 8px;
+`;
 const AuthorInput = styled.input`
     width: 80%;
     height: 20px;
@@ -109,7 +109,6 @@ const ContentText = styled.textarea`
     width: 80%;
     height: 150px;
 `;
-
 
 const SubmitBtn = styled.button`
     width: 308px;

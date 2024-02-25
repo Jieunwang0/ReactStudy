@@ -1,18 +1,22 @@
+import { useContext } from "react";
 import DiaryItem from "./DiaryItem";
 import styled from 'styled-components';
+import { DiaryStateContext } from "./App";
 
-const DiaryList = ({ onDelete, onEdit, diaryList }) => {
+const DiaryList = () => {
+    const diaryList = useContext(DiaryStateContext);
     return (
         <ListContainer>
             <TotalList>{diaryList.length}개의 글이 있습니다.</TotalList>
             <ListBox>
                 {diaryList.map((it) => (
-                    <DiaryItem key={it.id} {...it} onDelete={onDelete} onEdit={onEdit}/>
+                    <DiaryItem key={it.id} {...it} />
                 ))}
             </ListBox>
         </ListContainer>
     );
 };
+
 
 DiaryList.defaultProps = {
     diaryList: [],

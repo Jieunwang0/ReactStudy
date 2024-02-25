@@ -1,15 +1,11 @@
 import styled from "styled-components";
-import { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
+import { DiaryDispatchContext } from "./App";
 
-const DiaryItem = ({
-    onDelete,
-    onEdit,
-    id,
-    author,
-    content,
-    created_date,
-    emotion,
-}) => {
+const DiaryItem = ({ id, author, content, created_date, emotion }) => {
+    const { onDelete } = useContext(DiaryDispatchContext);
+    const { onEdit } = useContext(DiaryDispatchContext);
+
     const [isEdit, setIsEdit] = useState(false);
     const toggleBtn = () => {
         setIsEdit(!isEdit);
@@ -31,11 +27,11 @@ const DiaryItem = ({
             return;
         }
         if (window.confirm(`${id}번째 일기를 정말 수정하시겠습니까?`)) {
-        onEdit(id, localContent);
-        toggleBtn();
-    };
+            onEdit(id, localContent);
+            toggleBtn();
         }
-        
+    };
+
     return (
         <ItemContainer>
             <ItemBox key={id}>
@@ -74,7 +70,7 @@ const DiaryItem = ({
     );
 };
 
-export default DiaryItem;
+export default React.memo(DiaryItem);
 
 const ItemContainer = styled.div`
     width: 375px;
